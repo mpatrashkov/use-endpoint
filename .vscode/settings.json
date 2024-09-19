@@ -1,0 +1,10 @@
+{
+	"cSpell.words": ["graphqlsp", "tanstack"],
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	// "editor.codeActionsOnSave": {
+	// 	"source.organizeImports": "always"
+	// },
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true
+}

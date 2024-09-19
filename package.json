@@ -1,34 +1,45 @@
 {
-  "name": "use-endpoint",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.56.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@testing-library/react-hooks": "^8.0.1",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^9.9.0",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.9",
-    "globals": "^15.9.0",
-    "jsdom": "^25.0.0",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1",
-    "vitest": "^2.1.1"
-  },
-  "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e"
+	"name": "use-endpoint",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"lint": "eslint .",
+		"preview": "vite preview",
+		"test": "vitest",
+		"codegen": "graphql-codegen --watch"
+	},
+	"dependencies": {
+		"@graphql-typed-document-node/core": "^3.2.0",
+		"@tanstack/react-query": "^5.56.2",
+		"graphql": "^16.9.0",
+		"graphql-request": "^7.1.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	},
+	"devDependencies": {
+		"@0no-co/graphqlsp": "^1.12.14",
+		"@eslint/js": "^9.9.0",
+		"@graphql-codegen/cli": "^5.0.2",
+		"@graphql-codegen/schema-ast": "^4.1.0",
+		"@parcel/watcher": "^2.4.1",
+		"@testing-library/dom": "^10.4.0",
+		"@testing-library/jest-dom": "^6.5.0",
+		"@testing-library/react": "^16.0.1",
+		"@types/react": "^18.3.3",
+		"@types/react-dom": "^18.3.0",
+		"@vitejs/plugin-react-swc": "^3.5.0",
+		"eslint": "^9.9.0",
+		"eslint-plugin-react-hooks": "^5.1.0-rc.0",
+		"eslint-plugin-react-refresh": "^0.4.9",
+		"globals": "^15.9.0",
+		"msw": "^2.4.8",
+		"prettier": "^3.3.3",
+		"typescript": "^5.5.3",
+		"typescript-eslint": "^8.0.1",
+		"vite": "^5.4.1",
+		"vitest": "^2.1.1"
+	}
 }
