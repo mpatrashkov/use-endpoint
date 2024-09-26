@@ -1,6 +1,8 @@
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
-import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { request } from "graphql-request";
+import { EndpointContext } from "./create-use-endpoint-factory";
+import { getQueryKey } from "./get-query-key";
 
 export interface CreateUseQueryEndpointOptions {
 	staleAfterMs?: number | "never";
@@ -12,13 +14,9 @@ export interface CreateUseQueryEndpointConfig<TData, TVariables, TResult> {
 	options?: CreateUseQueryEndpointOptions;
 }
 
-export interface CreateUseQueryEndpointContext {
-	baseUrl: string;
-	queryClient: QueryClient;
-}
-
 interface UseQueryEndpointMethods<TResult, TVariables> {
-	setData(callback: (data?: TResult) => TResult): void;
+	setData(payload: TVariables, callback: (data?: TResult) => TResult): void;
+	invalidate(payload: TVariables): void;
 }
 
 export interface UseQueryEndpoint<TResult, TVariables>
@@ -29,21 +27,32 @@ export interface UseQueryEndpoint<TResult, TVariables>
 }
 
 export function createUseQueryEndpoint<TData, TVariables, TResult>(
-	context: CreateUseQueryEndpointContext,
+	context: EndpointContext,
 	config: CreateUseQueryEndpointConfig<TData, TVariables, TResult>,
 ): UseQueryEndpoint<TResult, TVariables> {
 	const methods: UseQueryEndpointMethods<TResult, TVariables> = {
-		setData(callback) {
+		setData(payload: TVariables, callback) {
 			context.queryClient.setQueryData(
-				["test"],
-				callback(context.queryClient.getQueryData(["test"])),
+				getQueryKey(config.document, payload),
+				callback(
+					context.queryClient.getQueryData(
+						getQueryKey(config.document, payload),
+					),
+				),
 			);
+		},
+		invalidate(payload: TVariables) {
+			context.queryClient.invalidateQueries({
+				exact: true,
+				queryKey: getQueryKey(config.document, payload),
+				refetchType: "active",
+			});
 		},
 	};
 
 	return Object.assign((payload: TVariables) => {
 		return useSuspenseQuery({
-			queryKey: ["test"],
+			queryKey: getQueryKey(config.document, payload),
 			queryFn: () =>
 				request<TData>({
 					url: context.baseUrl,
@@ -58,6 +67,10 @@ export function createUseQueryEndpoint<TData, TVariables, TResult>(
 					// TODO: remove cast
 					return result as unknown as TResult;
 				}),
+			staleTime:
+				config.options?.staleAfterMs === "never"
+					? Infinity
+					: config.options?.staleAfterMs,
 		});
 	}, methods);
 }

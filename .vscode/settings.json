@@ -1,5 +1,5 @@
 {
-	"cSpell.words": ["graphqlsp", "tanstack"],
+	"cSpell.words": ["codegen", "graphqlsp", "tanstack"],
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	// "editor.codeActionsOnSave": {
