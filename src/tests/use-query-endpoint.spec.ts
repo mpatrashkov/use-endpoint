@@ -60,6 +60,12 @@ describe("useQueryEndpoint", () => {
 		});
 	});
 
+	describe("getQueryObject", async () => {
+		reactQueryTest("return correct query key", () => {
+			expect(useBooks.getQueryObject({}).queryKey).toEqual(["Books", {}]);
+		});
+	});
+
 	describe("setData", async () => {
 		reactQueryTest("updates query data", async ({ wrapper }) => {
 			const { result } = renderHook(() => useBooks({}), { wrapper });
