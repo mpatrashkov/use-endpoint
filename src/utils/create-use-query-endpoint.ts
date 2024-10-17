@@ -20,7 +20,7 @@ export interface CreateUseQueryEndpointConfig<TData, TVariables, TResult> {
 interface UseQueryEndpointMethods<TResult, TVariables> {
 	setData(payload: TVariables, callback: (data?: TResult) => TResult): void;
 	invalidate(payload: TVariables): void;
-	getQueryObject(payload: TVariables): UseSuspenseQueryOptions<TResult>;
+	useGetQueryObject(payload: TVariables): UseSuspenseQueryOptions<TResult>;
 }
 
 export interface UseQueryEndpoint<TResult, TVariables>
@@ -52,7 +52,9 @@ export function createUseQueryEndpoint<TData, TVariables, TResult>(
 				refetchType: "active",
 			});
 		},
-		getQueryObject(payload) {
+		useGetQueryObject(payload) {
+			const headers = context.useHeaders();
+
 			return {
 				queryKey: getQueryKey(config.document, payload),
 				queryFn: () =>
@@ -61,6 +63,7 @@ export function createUseQueryEndpoint<TData, TVariables, TResult>(
 						document: config.document,
 						// TODO: remove cast
 						variables: payload as object,
+						requestHeaders: headers,
 					}).then((result) => {
 						if (config.transform) {
 							return config.transform(result);
@@ -78,6 +81,6 @@ export function createUseQueryEndpoint<TData, TVariables, TResult>(
 	};
 
 	return Object.assign((payload: TVariables) => {
-		return useSuspenseQuery(methods.getQueryObject(payload));
+		return useSuspenseQuery(methods.useGetQueryObject(payload));
 	}, methods);
 }

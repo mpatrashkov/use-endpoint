@@ -8,6 +8,7 @@ import { createUseMutationEndpoint } from "./create-use-mutation-endpoint";
 export interface EndpointContext {
 	baseUrl: string;
 	queryClient: QueryClient;
+	useHeaders(): HeadersInit;
 }
 
 export function createUseEndpointFactory(context: EndpointContext) {

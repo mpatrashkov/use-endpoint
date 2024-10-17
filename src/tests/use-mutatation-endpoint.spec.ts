@@ -15,6 +15,9 @@ const createUseCreateBookEndpoint = (queryClient: QueryClient) =>
 	createUseEndpointFactory({
 		baseUrl: "http://example.com",
 		queryClient,
+		useHeaders() {
+			return {};
+		},
 	}).createUseMutationEndpoint({
 		document: graphql(`
 			mutation CreateBook($title: String!) {
@@ -40,6 +43,9 @@ describe("useMutationEndpoint", () => {
 			const useCreateBookError = createUseEndpointFactory({
 				baseUrl: "http://example.com",
 				queryClient,
+				useHeaders() {
+					return {};
+				},
 			}).createUseMutationEndpoint({
 				document: graphql(`
 					mutation CreateBookError($title: String!) {

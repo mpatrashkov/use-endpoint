@@ -44,6 +44,8 @@ export function createUseMutationEndpoint<TData, TVariables, TResult>(
 		TResult,
 		TVariables
 	> = () => {
+		const headers = context.useHeaders();
+
 		const mutation = useMutation({
 			mutationFn: (payload: TVariables) =>
 				request<TData>({
@@ -51,6 +53,7 @@ export function createUseMutationEndpoint<TData, TVariables, TResult>(
 					document: config.document,
 					// TODO: remove cast
 					variables: payload as object,
+					requestHeaders: headers,
 				}).then((result) => {
 					if (config.transform) {
 						return config.transform(result);

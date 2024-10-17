@@ -16,6 +16,9 @@ const createUseBooksEndpoint = (queryClient: QueryClient) =>
 	createUseEndpointFactory({
 		baseUrl: "http://example.com",
 		queryClient,
+		useHeaders() {
+			return {};
+		},
 	}).createUseQueryEndpoint({
 		document: graphql(`
 			query Books {
@@ -62,7 +65,10 @@ describe("useQueryEndpoint", () => {
 
 	describe("getQueryObject", async () => {
 		reactQueryTest("return correct query key", () => {
-			expect(useBooks.getQueryObject({}).queryKey).toEqual(["Books", {}]);
+			expect(useBooks.useGetQueryObject({}).queryKey).toEqual([
+				"Books",
+				{},
+			]);
 		});
 	});
 
