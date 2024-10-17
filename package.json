@@ -10,7 +10,8 @@
 		"preview": "vite preview",
 		"test": "vitest",
 		"codegen:dev": "graphql-codegen --watch",
-		"codegen": "graphql-codegen"
+		"codegen": "graphql-codegen",
+		"prepare": "npm run build"
 	},
 	"dependencies": {
 		"@graphql-typed-document-node/core": "^3.2.0",
